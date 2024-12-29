@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/wenwen12345/uni-web:latest
+    container_name: uni-web
+    ports:
+      - "8000:8000"
+    environment:
+      - DEV_MODE=false
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./src/backend/app.yaml:/app/app.yaml
+    restart: unless-stopped
+    networks:
+      - uni-web-network
+
+networks:
+  uni-web-network:
+    driver: bridge
