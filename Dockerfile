@@ -6,11 +6,17 @@ WORKDIR /app/frontend
 # 全局安装 pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
+# 复制package.json和lockfile
+COPY src/frontend/package.json src/frontend/pnpm-lock.yaml ./
+
+# 安装依赖
+RUN pnpm install --frozen-lockfile
+
 # 复制源代码
 COPY src/frontend/ .
-RUN ls -la
-# 安装依赖
-RUN pnpm install
+
+# 确保TypeScript配置正确
+RUN pnpm add -D @types/node typescript @vitejs/plugin-vue vue-tsc
 
 # 构建
 RUN pnpm run build
