@@ -15,6 +15,17 @@ services:
     networks:
       - uni-web-network
 
+  uni-api:
+    container_name: uni-api
+    image: yym68686/uni-api:latest
+    environment:
+      - CONFIG_URL=http://uni-web:8000/app.yaml
+    ports:
+      - 8001:8000
+    restart: unless-stopped
+    networks:
+      - uni-web-network
+
 networks:
   uni-web-network:
     driver: bridge
