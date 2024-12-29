@@ -8,9 +8,9 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # 复制源代码
 COPY src/frontend/ .
-
+RUN ls -la
 # 安装依赖
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 # 构建
 RUN pnpm run build
