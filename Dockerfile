@@ -6,7 +6,7 @@ WORKDIR /app/frontend
 # 全局安装 pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# 首先复制整个前端目录
+# 复制源代码
 COPY src/frontend/ .
 
 # 安装依赖
