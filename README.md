@@ -1,6 +1,6 @@
 # Vite + Vue + Shadcn + FastAPI 全栈应用
 
-这是一个现代化的全栈Web应用模板，采用Vue 3作为前端框架，FastAPI作为后端服务。
+这是一个 uni-api 的 web 面板，采用Vue 3作为前端框架，FastAPI作为后端服务。
 
 ## 技术栈
 
