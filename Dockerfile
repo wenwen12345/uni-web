@@ -25,25 +25,26 @@ COPY src/backend/ .
 RUN pip install -U pip setuptools wheel
 RUN pip install pdm
 
-# 安装依赖
-RUN pdm install --prod
+# 使用PDM安装依赖到指定目录
+ENV PDM_USE_VENV=false
+RUN pdm config python.use_venv false
+RUN pdm install --prod --no-lock --no-editable
 
 # 最终运行阶段
 FROM python:3.13-slim
 
 WORKDIR /app
 
-# 复制后端文件
+# 复制后端文件和依赖
 COPY --from=backend-builder /app/backend/ ./backend/
-COPY --from=backend-builder /root/.local/share/pdm/venv/ ./venv/
+COPY --from=backend-builder /app/backend/__pypackages__/3.13/lib ./backend/lib/
 
 # 复制前端构建文件
 COPY --from=frontend-builder /app/frontend/dist/ ./backend/frontend/dist/
 
 # 设置环境变量
-ENV PATH="/app/venv/bin:$PATH"
+ENV PYTHONPATH=/app/backend/lib
 ENV DEV_MODE=false
-ENV PYTHONPATH=/app/backend
 
 # 暴露端口
 EXPOSE 8000
